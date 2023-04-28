@@ -1,0 +1,12 @@
+
+// forne utilitario prar trabalhar com caminhos de arquivos e diretorios
+const path = require('path');
+
+
+// exportar o caminho da conexao com banco de doados, models, seeders e migrations
+module.exports = {
+  'config': path.resolve('db','config', 'config.js'),
+  'models-path': path.resolve('db','models'),
+  'seeders-path': path.resolve('db','seeders'),
+  'migrations-path': path.resolve('db','migrations')
+}
