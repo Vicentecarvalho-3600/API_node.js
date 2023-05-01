@@ -131,4 +131,31 @@ router.post("/users", async (req, res) => {
 
 });
 
+// criar a rota editar
+// enviar a requisicao no body com em formato json
+router.put("/users", async (req, res) => {
+
+    //Receber os dados no corpo da requisiçao
+    var dados = req.body;
+    // console.log(dados);
+
+    //editar no banco de dados
+    await db.Users.update(dados, { where: {id: dados.id}})
+    .then(() =>{
+        // pausa o processamento e retorna a mensagem
+        return res.json({
+            messagem: "Usuario editado com sucesso!"
+        });
+
+
+    }).catch(()=>{
+        // pausa o precesamento e retotna a mensagem
+        return res.status(400).json({
+            messagem: "Erro Usuario não editado com sucesso!"
+        });
+    });
+
+});
+
+
 module.exports = router;
