@@ -76,6 +76,39 @@ router.get("/users", async(req, res) =>{
    }
 });
 
+// criar rota de visualizar e receber parâmetro id enviado pela URL
+// enderenço para acessar atraves da aplicação externa: http://localhost:8080/users/1
+router.get("/users/:id", async(req , res) =>{
+    //receber o parametro enviado na URL
+    const {id} = req.params;
+
+    const user = await db.Users.findOne({
+        //indicar quais colunas recuperar
+        attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
+
+        // acrecentar condicao pra indicar qual registo deve retornar do banco de dados
+
+        where: { id },
+    });
+
+    // console.log(user);
+    if(user){
+        return res.json({
+            user: user.dataValues
+        });
+    
+    }else {
+        return res.status(400).json({
+            mensagem: "Erro: Usuário não encontrado!"
+        });
+    }
+
+    
+});
+
+
+
+
 // criar cadastro
 router.post("/users", async (req, res) => {
 
