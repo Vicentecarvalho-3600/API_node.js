@@ -7,7 +7,6 @@ const db = require('./../db/models');
 
 
 // criar rota listar
-
 router.get("/users", async(req, res) =>{
     
     //receber o numero da pagina quando nao enviando o numero da pagina e atribuido pagina 1
@@ -155,6 +154,31 @@ router.put("/users", async (req, res) => {
         });
     });
 
+});
+
+// apagar usuario 
+router.delete("/users/:id", async (req, res) => {
+
+    const {id} = req.params;
+
+    console.log(id);
+    // agagar usuario no banco de dados utilizando a models users
+    await db.Users.destroy({
+        // acrecentar o where na instrução SQL indicando qual registro excluir no BD
+        where: {id}
+    }).then(() =>{
+        // pausa o precesamento e retotna a mensagem
+        return res.json({
+            messagem: "Usuario apagado com sucesso!"
+        });
+    }).catch(()=>{
+        // pausa o precesamento e retotna a mensagem
+        return res.status(400).json({
+            messagem: "Erro Usuario não apagado com sucesso!"
+        });
+    });
+
+    
 });
 
 
